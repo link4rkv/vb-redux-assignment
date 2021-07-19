@@ -1,21 +1,16 @@
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
+import thunkMiddleware from 'redux-thunk'
 
-const counterReducer = (state = { counter: 0}, action) => {
-  if (action.type === 'increment') {
+const todoReducer = (state = { lists: [] }, action) => {
+  if (action.type === 'FETCH_LIST') {
     return {
-      counter: state.counter + 1
+      lists: action.payload
     }
   }
 
-  if (action.type === 'decrement') {
-    return {
-      counter: state.counter - 1
-    }
-  }
-
-  return state;
+  return state
 }
 
-const store = createStore(counterReducer);
+const store = createStore(todoReducer, applyMiddleware(thunkMiddleware));
 
 export default store;
